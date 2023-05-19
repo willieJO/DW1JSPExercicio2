@@ -1,0 +1,54 @@
+Uma ideia de projeto para iniciantes que utilize Servlet, JSP e REST seria criar uma aplicação web simples de lista de tarefas. 
+Nessa aplicação, os usuários poderiam cadastrar, atualizar e excluir tarefas, além de marcar as tarefas como concluídas.
+
+Abaixo está uma proposta de como essa aplicação poderia ser estruturada:
+
+1. Criação do banco de dados:
+   - Criação de uma tabela "tarefas" com os campos id, titulo, descricao, data_criacao, data_conclusao e status.
+
+2. Criação das páginas JSP:
+   - Página de login: formulário de login com usuário e senha.
+   - Página principal: listagem das tarefas cadastradas e opção de cadastrar novas tarefas.
+   - Página de cadastro de tarefa: formulário para cadastrar uma nova tarefa.
+   - Página de edição de tarefa: formulário para editar uma tarefa existente.
+   
+3. Implementação dos Servlets:
+   - Servlet de login: verifica se o usuário e senha são válidos e redireciona para a página principal.
+   - Servlet de logout: encerra a sessão do usuário.
+   - Servlet de listagem de tarefas: busca as tarefas cadastradas no banco de dados e as exibe na página principal.
+   - Servlet de cadastro de tarefa: insere uma nova tarefa no banco de dados.
+   - Servlet de edição de tarefa: atualiza uma tarefa existente no banco de dados.
+   - Servlet de exclusão de tarefa: remove uma tarefa do banco de dados.
+   
+4. Implementação do serviço REST:
+   - Criação de uma API REST para fornecer acesso aos dados das tarefas cadastradas.
+   - Implementação dos métodos HTTP GET, POST, PUT e DELETE para buscar, cadastrar, atualizar e excluir tarefas.
+
+Essa é apenas uma sugestão de projeto para iniciantes utilizando Servlet, JSP e REST. É possível adaptar essa ideia de acordo com as 
+suas necessidades e interesses. O importante é que você pratique os conceitos básicos dessas tecnologias e consiga criar uma aplicação
+funcional.
+
+Para completar a proposta de projeto anterior, é possível acrescentar o Maven como ferramenta de gerenciamento de dependências e 
+build do projeto.
+
+O Maven é uma ferramenta de automação de construção de projetos que ajuda a gerenciar as dependências do projeto, compilar o código, 
+executar testes e empacotar o projeto em um arquivo JAR ou WAR, por exemplo. Ele simplifica o processo de construção do projeto e 
+torna a implantação mais fácil e consistente.
+
+Para incluir o Maven no projeto, você pode seguir os seguintes passos:
+
+    Adicionar o arquivo pom.xml na raiz do projeto. Esse arquivo descreve as informações do projeto e as dependências necessárias 
+    para a compilação e execução do código.
+
+    Configurar as dependências do projeto no arquivo pom.xml. Por exemplo, adicionar as dependências do Servlet API, JSP API e do 
+    driver JDBC para o banco de dados que você estiver usando.
+
+    Adicionar os plugins do Maven necessários no arquivo pom.xml para compilar, testar e empacotar o projeto. Por exemplo, o plugin 
+    do Tomcat para implantar o projeto em um servidor web.
+
+    Executar os comandos do Maven no terminal ou na IDE para compilar, testar e empacotar o projeto. Por exemplo, o comando 
+    "mvn package" para empacotar o projeto em um arquivo WAR.
+
+Usando o Maven, você pode simplificar o processo de construção do projeto e gerenciar facilmente as dependências do projeto. 
+Além disso, você pode usar plugins do Maven para automatizar tarefas comuns de desenvolvimento, como testes automatizados e 
+empacotamento de código.
