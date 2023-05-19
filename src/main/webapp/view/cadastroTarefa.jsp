@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Cadastro de Tarefa</h1>
-    <form method="post" action="cadastroTarefaServlet">
+    <form method="post" action="<%= request.getContextPath() %>/cadastroTarefaServlet">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" required>
         <br>

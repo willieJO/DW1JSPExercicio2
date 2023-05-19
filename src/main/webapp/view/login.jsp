@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form method="post" action="loginServlet">
+    <form action="<%= request.getContextPath() %>/loginServlet" method="post">
         <label for="username">Usuário:</label>
         <input type="text" id="username" name="username" required>
         <br>

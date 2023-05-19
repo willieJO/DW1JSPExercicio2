@@ -38,6 +38,7 @@ public class CadastroTarefaServlet extends HttpServlet {
             tarefa.setTitulo(titulo);
             tarefa.setDescricao(descricao);
             tarefa.setDataCriacao(dataCriacao);
+            tarefa.setDataConclusao(dataCriacao);
             tarefa.setUsuario(new Usuario());
 
             // Salvar a tarefa no banco de dados
@@ -45,11 +46,14 @@ public class CadastroTarefaServlet extends HttpServlet {
             tarefaDAO.cadastrarTarefa(tarefa);
 
             // Redirecionar de volta para a página principal
-            response.sendRedirect("mainServlet");
+            response.sendRedirect("view/main");
         } else {
             // Usuário não autenticado, redirecionar para a página de login
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("view/login.jsp");
         }
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	response.sendRedirect("view/cadastroTarefa.jsp");
     }
 }
 

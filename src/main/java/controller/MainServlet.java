@@ -35,10 +35,10 @@ public class MainServlet extends HttpServlet {
 
             // Passar as tarefas para a página JSP
             request.setAttribute("tarefas", tarefas);
-            request.getRequestDispatcher("main.jsp").forward(request, response);
+            request.getRequestDispatcher("view/main.jsp").forward(request, response);
         } else {
             // Usuário não autenticado, redirecionar para a página de login
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("view/login.jsp");
         }
     }
 }

@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +24,8 @@ public class TarefaDAO {
 
     public List<Tarefa> obterTarefasPorUsuario(int usuarioId) {
         List<Tarefa> tarefas = new ArrayList<>();
-
         String sql = "SELECT * FROM tarefas WHERE usuario_id = ?";
+        try (Connection conn = ConnectionFactory.getConnection()) {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, usuarioId);
 
@@ -48,6 +48,7 @@ public class TarefaDAO {
                     tarefas.add(tarefa);
                 }
             }
+        }
         } catch (SQLException e) {
             System.err.println("Error retrieving tasks from the database: " + e.getMessage());
         }
@@ -57,18 +58,23 @@ public class TarefaDAO {
 
     public void cadastrarTarefa(Tarefa tarefa) {
         String sql = "INSERT INTO tarefas (titulo, descricao, data_criacao, data_conclusao, status, usuario_id) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = ConnectionFactory.getConnection()) {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, tarefa.getTitulo());
             statement.setString(2, tarefa.getDescricao());
             statement.setDate(3, new Date(tarefa.getDataCriacao().getTime()));
             statement.setDate(4, new Date(tarefa.getDataConclusao().getTime()));
             statement.setString(5, tarefa.getStatus());
-            statement.setInt(6, tarefa.getUsuario().getId());
+            statement.setInt(6, 1);
 
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error inserting task into the database: " + e.getMessage());
         }
+        } catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
 
     public void atualizarTarefa(Tarefa tarefa) {

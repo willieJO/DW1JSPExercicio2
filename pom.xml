@@ -32,6 +32,13 @@
 	    <version>4.0.1</version>
 	    <scope>provided</scope>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/taglibs/standard -->
+	<dependency>
+    	<groupId>taglibs</groupId>
+    	<artifactId>standard</artifactId>
+    	<version>1.1.2</version>
+	</dependency>
+
 	<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 	<dependency>
 	    <groupId>javax.servlet.jsp</groupId>
@@ -47,6 +54,13 @@
     <!-- To define the plugin version in your parent POM -->
     <pluginManagement>
       <plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>

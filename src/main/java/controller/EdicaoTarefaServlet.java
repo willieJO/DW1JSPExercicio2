@@ -45,14 +45,14 @@ public class EdicaoTarefaServlet extends HttpServlet {
                 tarefaDAO.atualizarTarefa(tarefa);
 
                 // Redirecionar de volta para a página principal
-                response.sendRedirect("mainServlet");
+                response.sendRedirect("view/mainServlet");
             } else {
                 // A tarefa não pertence ao usuário logado, redirecionar para a página principal
-                response.sendRedirect("mainServlet");
+                response.sendRedirect("view/mainServlet");
             }
         } else {
             // Usuário não autenticado, redirecionar para a página de login
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("view/login.jsp");
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
