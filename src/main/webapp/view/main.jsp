@@ -17,11 +17,14 @@ List<Tarefa> tarefas =  (List<Tarefa>) request.getAttribute("tarefas");
     <h2>Tarefas:</h2>
     <ul>
         <% for (Tarefa tarefa : tarefas) { %>
-            <li><%= tarefa.getTitulo() %></li>
-            <li><%= tarefa.getDescricao() %></li>
+            <li>
+                <%= tarefa.getTitulo() %>
+                <%= tarefa.getDescricao() %>
+                <a href="deletarTarefa?id=<%= tarefa.getId() %>">Deletar</a>
+                <a href="edicaoTarefaServlet?id=<%= tarefa.getId() %>">Editar</a>
+            </li>
         <% } %>
     </ul>
     <a href="view/cadastroTarefa.jsp">Criar nova tarefa</a>
-    
 </body>
 </html>

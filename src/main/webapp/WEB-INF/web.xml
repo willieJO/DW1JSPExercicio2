@@ -99,4 +99,24 @@
     <servlet-name>EdicaoTarefaServlet</servlet-name>
     <url-pattern>/EdicaoTarefaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CadastroUsuarioServelet</display-name>
+    <servlet-name>CadastroUsuarioServelet</servlet-name>
+    <servlet-class>controller.CadastroUsuarioServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastroUsuarioServelet</servlet-name>
+    <url-pattern>/CadastroUsuarioServelet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeletarTarefaServlet</display-name>
+    <servlet-name>DeletarTarefaServlet</servlet-name>
+    <servlet-class>controller.DeletarTarefaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletarTarefaServlet</servlet-name>
+    <url-pattern>/DeletarTarefaServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

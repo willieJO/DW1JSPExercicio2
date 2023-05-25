@@ -1,6 +1,8 @@
 package controller;
 
-import java.io.IOException;  
+import java.io.IOException;
+
+import dao.UsuarioDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,15 +20,13 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        // Realizar a validação do usuário e senha
-        // ...
-
-        // Exemplo de validação básica
-        if (username.equals("admin") && password.equals("admin123")) {
+        HttpSession session = request.getSession();
+        UsuarioDAO dao = new UsuarioDAO();
+        if (dao.usuarioValido(username,password,session)) {
             // Autenticação bem-sucedida
-            HttpSession session = request.getSession();
+            
             session.setAttribute("username", username);
+            
             response.sendRedirect("mainServlet");
         } else {
             // Autenticação falhou

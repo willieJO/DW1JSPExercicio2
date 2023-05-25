@@ -21,6 +21,19 @@ public class TarefaDAO {
             System.err.println("Error connecting to the database: " + e.getMessage());
         }
     }
+    
+    public void deletarTarefa(int id) {
+    	String sql = "DELETE FROM tarefas where id = ?";
+    	try (Connection conn = ConnectionFactory.getConnection()) {
+    		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+    			statement.setInt(1, id);
+    			statement.executeUpdate();
+    		}
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public List<Tarefa> obterTarefasPorUsuario(int usuarioId) {
         List<Tarefa> tarefas = new ArrayList<>();
@@ -65,8 +78,7 @@ public class TarefaDAO {
             statement.setDate(3, new Date(tarefa.getDataCriacao().getTime()));
             statement.setDate(4, new Date(tarefa.getDataConclusao().getTime()));
             statement.setString(5, tarefa.getStatus());
-            statement.setInt(6, 1);
-
+            statement.setInt(6, tarefa.getUsuario().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error inserting task into the database: " + e.getMessage());
@@ -78,16 +90,11 @@ public class TarefaDAO {
     }
 
     public void atualizarTarefa(Tarefa tarefa) {
-        String sql = "UPDATE tarefas SET titulo = ?, descricao = ?, data_criacao = ?, data_conclusao = ?, status = ?, usuario_id = ? WHERE id = ?";
+        String sql = "UPDATE tarefas SET titulo = ?, descricao = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, tarefa.getTitulo());
             statement.setString(2, tarefa.getDescricao());
-            statement.setDate(3, new Date(tarefa.getDataCriacao().getTime()));
-            statement.setDate(4, new Date(tarefa.getDataConclusao().getTime()));
-            statement.setString(5, tarefa.getStatus());
-            statement.setInt(6, tarefa.getUsuario().getId());
-            statement.setInt(7, tarefa.getId());
-
+            statement.setInt(3, tarefa.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error updating task in the database: " + e.getMessage());

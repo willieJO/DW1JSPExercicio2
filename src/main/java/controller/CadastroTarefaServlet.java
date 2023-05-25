@@ -1,6 +1,6 @@
 package controller;
 
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException; 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,8 +31,8 @@ public class CadastroTarefaServlet extends HttpServlet {
             Date dataCriacao = new Date(System.currentTimeMillis());
 
             // Obter o ID do usuário logado
-            int userId = 0; // Obter o ID do usuário logado
-
+            int userId = (int) session.getAttribute("usernameId");
+            
             // Criar a tarefa
             Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(titulo);
@@ -40,13 +40,14 @@ public class CadastroTarefaServlet extends HttpServlet {
             tarefa.setDataCriacao(dataCriacao);
             tarefa.setDataConclusao(dataCriacao);
             tarefa.setUsuario(new Usuario());
-
+            tarefa.getUsuario().setId(userId);
             // Salvar a tarefa no banco de dados
             TarefaDAO tarefaDAO = new TarefaDAO();
             tarefaDAO.cadastrarTarefa(tarefa);
 
-            // Redirecionar de volta para a página principal
-            response.sendRedirect("view/main");
+            String servletUrl = request.getContextPath() + "/mainServlet"; 
+            response.sendRedirect(servletUrl);
+            	
         } else {
             // Usuário não autenticado, redirecionar para a página de login
             response.sendRedirect("view/login.jsp");

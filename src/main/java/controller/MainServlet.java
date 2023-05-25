@@ -2,7 +2,7 @@ package controller;
 
 
 
-import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.RequestDispatcher; 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,7 +28,7 @@ public class MainServlet extends HttpServlet {
         // Verificar se o usuário está autenticado
         if (username != null) {
             // Obter as tarefas do usuário logado
-            int userId = 1;// Obter o ID do usuário logado
+            int userId = (int) session.getAttribute("usernameId");// Obter o ID do usuário logado
 
             TarefaDAO tarefaDAO = new TarefaDAO();
             List<Tarefa> tarefas = tarefaDAO.obterTarefasPorUsuario(userId);
