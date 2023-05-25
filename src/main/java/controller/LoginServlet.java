@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("mainServlet");
         } else {
             // Autenticação falhou
-            response.sendRedirect("view/login.jsp");
+            response.sendRedirect("mainServlet");
         }
     }
 }
