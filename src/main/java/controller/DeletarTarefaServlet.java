@@ -6,9 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Tarefa;
 import jakarta.servlet.annotation.WebServlet;
 
 import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.TarefaDAO;
 
@@ -31,22 +34,24 @@ public class DeletarTarefaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int tarefaId = Integer.parseInt(request.getParameter("id"));
-
-        // Deletar a tarefa do banco de dados
-        TarefaDAO tarefaDAO = new TarefaDAO();
-        tarefaDAO.deletarTarefa(tarefaId);
-
-        // Redirecionar de volta para a página principal
+		
         response.sendRedirect("mainServlet");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ObjectMapper  objectMapper = new ObjectMapper();
+		Tarefa tarefa = objectMapper.readValue(request.getReader(), Tarefa.class);
+		
+		
+        // Deletar a tarefa do banco de dados
+        TarefaDAO tarefaDAO = new TarefaDAO();
+        tarefaDAO.deletarTarefa(tarefa.getId());
+
+        // Redirecionar de volta para a página principal
+        
 		
 	}
 

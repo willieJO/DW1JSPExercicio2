@@ -21,7 +21,7 @@ public class EdicaoTarefaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-
+        	
         // Verificar se o usuário está autenticado
         if (username != null) {
             // Obter os dados da tarefa do formulário
