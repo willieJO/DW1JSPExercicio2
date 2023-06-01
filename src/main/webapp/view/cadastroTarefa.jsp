@@ -23,7 +23,7 @@
                     <h2 class="fw-bold mb-2 text-uppercase">Cadastrar Tarefa</h2>
                     
                     <div class="form-outline form-white mb-4">
-                      <label class="form-label" for=""tituloX"">Nome da tarefa</label>
+                      <label class="form-label" for="tituloX">Nome da tarefa</label>
                       <input required name="titulo" type="text" id="tituloX" class="form-control form-control-lg" />
                           
                     </div>
@@ -44,7 +44,6 @@
                   </div>
                 
                   <div>
-                    <p class="mb-0">Crie uma conta aqui <a href="<%= request.getContextPath() %>/cadastroUsuario" class="text-white-50 fw-bold">Registrars</a>
                     </p>
                   </div>
                 
@@ -56,16 +55,37 @@
 </section>
 </body>
 <script>
+var url = "<%= request.getContextPath() %>/cadastroTarefaServlet"
+
 	$("#cadastrarTarefa").on('click',function(){
-		if ($('#tituloX').val()) == ''{
+		var isOk = true;
+		if ($('#tituloX').val() == '') {
 			$('#tituloX').css('background-color','#f0a1a9')
-			return;
+			isOk = false;
 		}
 		if ($('#descricaoX').val() == '') {
 			$('#descricaoX').css('background-color','#f0a1a9')
-			return;
+			isOk = false;
 		}
-		
+		if (isOk) {
+			obj = {
+				"titulo": $("#tituloX").val(),
+				"descricao": $("#descricaoX").val()
+			}
+			
+	    	$.ajax({
+	    			type: "POST",
+	    			url: url,
+	    			data: JSON.stringify(obj),
+	    			success: function(response){
+	    				window.location.href = "<%= request.getContextPath() %>/mainServlet"
+	    			 },
+	    	         error: function(error) {
+	    	            console.log(error)
+	    	         }
+	    	});
+		}
+	    	
 	})
 	
 </script>

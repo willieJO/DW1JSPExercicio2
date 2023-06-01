@@ -1,6 +1,6 @@
 package controller;
 
-import jakarta.servlet.ServletException; 
+import jakarta.servlet.ServletException;  
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +14,8 @@ import dao.TarefaDAO;
 import java.io.IOException;
 import java.sql.Date;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @WebServlet("/cadastroTarefaServlet")
 public class CadastroTarefaServlet extends HttpServlet {
 	public CadastroTarefaServlet() {
@@ -26,22 +28,15 @@ public class CadastroTarefaServlet extends HttpServlet {
         // Verificar se o usuário está autenticado
         if (username != null) {
             // Obter os dados da tarefa do formulário
-            String titulo = request.getParameter("titulo");
-            String descricao = request.getParameter("descricao");
+        	ObjectMapper  objectMapper = new ObjectMapper();
+    		Tarefa tarefa = objectMapper.readValue(request.getReader(), Tarefa.class);
             Date dataCriacao = new Date(System.currentTimeMillis());
-
-            // Obter o ID do usuário logado
             int userId = (int) session.getAttribute("usernameId");
             
-            // Criar a tarefa
-            Tarefa tarefa = new Tarefa();
-            tarefa.setTitulo(titulo);
-            tarefa.setDescricao(descricao);
             tarefa.setDataCriacao(dataCriacao);
             tarefa.setDataConclusao(dataCriacao);
             tarefa.setUsuario(new Usuario());
             tarefa.getUsuario().setId(userId);
-            // Salvar a tarefa no banco de dados
             TarefaDAO tarefaDAO = new TarefaDAO();
             tarefaDAO.cadastrarTarefa(tarefa);
 

@@ -1,6 +1,6 @@
 package controller;
 
-import jakarta.servlet.ServletException; 
+import jakarta.servlet.ServletException;  
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,47 +10,46 @@ import jakarta.servlet.annotation.WebServlet;
 
 import dao.TarefaDAO;
 import model.Tarefa;
+import model.HTTPRequestStatus;
 
 import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class EdicaoTarefaServlet
  */
 @WebServlet("/edicaoTarefaServlet")
 public class EdicaoTarefaServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-        	
+        HTTPRequestStatus http = new HTTPRequestStatus();
+        http.setStatus(false);
+        http.setRedirectUrl("");
         // Verificar se o usuário está autenticado
         if (username != null) {
-            // Obter os dados da tarefa do formulário
             int tarefaId = (int) session.getAttribute("tarefaId");
-            String titulo = request.getParameter("titulo");
-            String descricao = request.getParameter("descricao");
-
-            // Obter o ID do usuário logado
+            ObjectMapper  objectMapper = new ObjectMapper();
+    		Tarefa tarefa = objectMapper.readValue(request.getReader(), Tarefa.class);
             int userId = (int) session.getAttribute("usernameId");
-            
-            // Verificar se a tarefa pertence ao usuário logado
+            tarefa.setId(userId);
             TarefaDAO tarefaDAO = new TarefaDAO();
-            Tarefa tarefa = tarefaDAO.obterTarefaPorId(tarefaId);
-
-            
-                // Atualizar os dados da tarefa
-                tarefa.setTitulo(titulo);
-                tarefa.setDescricao(descricao);
-                tarefa.setId(tarefaId);
-
-                // Salvar a tarefa no banco de dados
-                tarefaDAO.atualizarTarefa(tarefa);
-
-                // Redirecionar de volta para a página principal
-                response.sendRedirect("mainServlet");
-            
+            tarefaDAO.atualizarTarefa(tarefa);
+            http.setStatus(true);
+            http.setRedirectUrl("mainServlet");
+            String json = new Gson().toJson(http);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
         } else {
-            // Usuário não autenticado, redirecionar para a página de login
-            response.sendRedirect("view/login.jsp");
+        	http.setStatus(false);
+            http.setRedirectUrl("mainServlet");
+            String json = new Gson().toJson(http);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
