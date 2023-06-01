@@ -79,7 +79,7 @@ public class TarefaDAO {
             statement.setDate(4, new Date(tarefa.getDataConclusao().getTime()));
             statement.setString(5, tarefa.getStatus());
             statement.setInt(6, tarefa.getUsuario().getId());
-            statement.executeUpdate();
+            statement.executeUpdate(sql);
         } catch (SQLException e) {
             System.err.println("Error inserting task into the database: " + e.getMessage());
         }
@@ -91,11 +91,14 @@ public class TarefaDAO {
 
     public void atualizarTarefa(Tarefa tarefa) {
         String sql = "UPDATE tarefas SET titulo = ?, descricao = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, tarefa.getTitulo());
-            statement.setString(2, tarefa.getDescricao());
-            statement.setInt(3, tarefa.getId());
-            statement.executeUpdate();
+        try (Connection conn = ConnectionFactory.getConnection()) {
+        	try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, tarefa.getTitulo());
+                statement.setString(2, tarefa.getDescricao());
+                statement.setInt(3, tarefa.getId());
+                statement.executeUpdate();
+                conn.commit();
+        	}
         } catch (SQLException e) {
             System.err.println("Error updating task in the database: " + e.getMessage());
         }
