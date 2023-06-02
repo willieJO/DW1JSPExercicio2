@@ -34,7 +34,7 @@ public class EdicaoTarefaServlet extends HttpServlet {
             ObjectMapper  objectMapper = new ObjectMapper();
     		Tarefa tarefa = objectMapper.readValue(request.getReader(), Tarefa.class);
             int userId = (int) session.getAttribute("usernameId");
-            tarefa.setId(userId);
+            tarefa.setId(tarefaId);
             TarefaDAO tarefaDAO = new TarefaDAO();
             tarefaDAO.atualizarTarefa(tarefa);
             http.setStatus(true);

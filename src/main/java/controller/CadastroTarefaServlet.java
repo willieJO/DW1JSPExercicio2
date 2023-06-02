@@ -32,11 +32,12 @@ public class CadastroTarefaServlet extends HttpServlet {
     		Tarefa tarefa = objectMapper.readValue(request.getReader(), Tarefa.class);
             Date dataCriacao = new Date(System.currentTimeMillis());
             int userId = (int) session.getAttribute("usernameId");
-            
+            Usuario user = new Usuario();
+            user.setId(userId);
             tarefa.setDataCriacao(dataCriacao);
             tarefa.setDataConclusao(dataCriacao);
             tarefa.setUsuario(new Usuario());
-            tarefa.getUsuario().setId(userId);
+            tarefa.setUsuario(user);
             TarefaDAO tarefaDAO = new TarefaDAO();
             tarefaDAO.cadastrarTarefa(tarefa);
 
@@ -44,7 +45,6 @@ public class CadastroTarefaServlet extends HttpServlet {
             response.sendRedirect(servletUrl);
             	
         } else {
-            // Usuário não autenticado, redirecionar para a página de login
             response.sendRedirect("view/login.jsp");
         }
     }

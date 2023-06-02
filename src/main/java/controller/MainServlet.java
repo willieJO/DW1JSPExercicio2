@@ -41,4 +41,9 @@ public class MainServlet extends HttpServlet {
             response.sendRedirect("view/login.jsp");
         }
     }
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession();
+    	session.setAttribute("username",null);
+    	response.sendRedirect("mainServlet");
+    }
 }
