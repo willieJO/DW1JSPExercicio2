@@ -32,7 +32,7 @@
 												<input type="password" name="logpass" class="form-style" placeholder="Sua Senha" id="logpass" autocomplete="off">
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a id="login" class="btn mt-4">submit</a>
+											<a id="login" class="btn mt-4">Entrar</a>
 				      					</div>
 			      					</div>
 			      				</div>
@@ -56,7 +56,7 @@
 												<input type="password" name="logpass" class="form-style" placeholder="Sua senha" id="cPass" autocomplete="off">
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a id="cadastrar" class="btn mt-4">submit</a>
+											<a id="cadastrar" class="btn mt-4">Criar conta</a>
 				      					</div>
 			      					</div>
 			      				</div>
