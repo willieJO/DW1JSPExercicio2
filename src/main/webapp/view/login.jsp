@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="style.css">
 <head>
@@ -9,51 +10,111 @@
 </head>
 <body>
     
-    <form action="<%= request.getContextPath() %>/loginServlet" method="post">
-    	<section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                <div class="card-body p-5 text-center">
-                
-                  <div class="mb-md-5 mt-md-4 pb-5">
-                  
-                    <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                    <p class="text-white-50 mb-5">Entre com seu usuario e senha</p>
-                  
-                    <div class="form-outline form-white mb-4">
-                      <label class="form-label" for="usernameX">Usuario</label>
-                      <input name="username" type="text" id="usernameX" class="form-control form-control-lg" />
-                    </div>
-                  
-                    <div class="form-outline form-white mb-4">
-                      <label class="form-label" for="typePasswordX">Senha</label>
-                      <input name="password" type="password" id="typePasswordX" class="form-control form-control-lg" />
-                    </div>
-                  
-                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Entrar</button>
-                  
-                    <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
-                      <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                      <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
-                    </div>
-                  
-                  </div>
-                
-                  <div>
-                    <p class="mb-0">Crie uma conta aqui <a href="<%= request.getContextPath() %>/cadastroUsuario" class="text-white-50 fw-bold">Registrars</a>
-                    </p>
-                  </div>
-                
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-</section>
-        
-    </form>
+	<div class="section">
+		<div class="container">
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+						<h6 class="mb-0 pb-3"><span>Entrar </span><span>Cadastrar</span></h6>
+			          	<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+			          	<label for="reg-log"></label>
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Entrar</h4>
+											<div class="form-group">
+												<input type="email" name="logemail" class="form-style" placeholder="Seu Usuario" id="logUser" autocomplete="off">
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="logpass" class="form-style" placeholder="Sua Senha" id="logpass" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+											<a id="login" class="btn mt-4">submit</a>
+				      					</div>
+			      					</div>
+			      				</div>
+								<div class="card-back">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Cadastrar</h4>
+											<div class="form-group">
+												<input type="text" name="logname" class="form-style" placeholder="Seu nome" id="cName" autocomplete="off">
+												<i class="input-icon uil uil-user"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input type="text" name="username" class="form-style" placeholder="Username" id="cUser" autocomplete="off">
+												<i class="input-icon uil uil-user"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input type="email" name="logemail" class="form-style" placeholder="Seu Email" id="cEmail" autocomplete="off">
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="logpass" class="form-style" placeholder="Sua senha" id="cPass" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+											<a id="cadastrar" class="btn mt-4">submit</a>
+				      					</div>
+			      					</div>
+			      				</div>
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
+	<script>
+		$("#login").on("click",function(){
+			var url = "<%= request.getContextPath() %>/loginServlet"
+			var obj = {
+						"login": $("#logUser").val(),
+						"senha": $("#logpass").val()
+				}
+				
+		    	$.ajax({
+		    			type: "POST",
+		    			url: url,
+		    			data: JSON.stringify(obj),
+		    			success: function(response){
+		    				if (response.status) {
+		    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;	
+		    				} else {
+		    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;
+		    				}
+		    			 },
+		    	         error: function(error) {
+		    	            console.log(error)
+		    	         }
+		    	});
+		})
+		$("#cadastrar").on("click",function(){
+			var url = "<%= request.getContextPath() %>/cadastroUsuario";
+			var obj = {
+					"login": $("#cUser").val(),
+					"senha": $("#cPass").val(),
+					"email": $("#cEmail").val(),
+					"nome": $("#cName").val()
+			}
+			$.ajax({
+    			type: "POST",
+    			url: url,
+    			data: JSON.stringify(obj),
+    			success: function(response){
+    				if (response.status) {
+    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;	
+    				} else {
+    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;
+    				}
+    			 },
+    	         error: function(error) {
+    	            console.log(error)
+    	         }
+    	});
+		})
+	</script>
 </body>
 </html>
