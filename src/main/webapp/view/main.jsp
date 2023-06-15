@@ -9,6 +9,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 <style>
 
 
@@ -357,30 +359,22 @@ h6 span{
   </div>
 </div>
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-8 col-md-8 col-lg-8 col-xl-8">
-              <div class="card bg-dark text-white" style="border-radius: 5rem;">
-                <div class="card-body p-5 text-center table-responsive">
-                	<table class="table table-dark"> 
-                		<tbody>Tarefas</tbody>
-                		<tr>
-                			<th>Nome</th>
-                			<th>Descricao</th>
-                			<th>Editar</th>
-                			<th>Excluir</th>
-                		</tr>
-                		<% for (Tarefa tarefa : tarefas) { %>
-                    <tr>
-                        <td><%= tarefa.getTitulo() %></td>
-                        <td><%= tarefa.getDescricao() %></td>
-                        <td><a class="btn btn-warning" href="edicaoTarefaServlet?id=<%= tarefa.getId() %>">Editar</a></td>
-                        <td><a  data-id="<%= tarefa.getId() %>" class="btn btn-danger" style="background-color: #ed6a6a!important;" >Deletar</a></td>
-                    </tr>
-                <% } %>
-                	</table>
-                	
-        
-    
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="card bg-dark text-white" style="border-radius: 5rem;">
+        <div class="card-body p-4 text-center table-responsive overflow-x-auto">
+                <table id="myTable">
+    				<thead>
+      					<tr>
+        					<th>Nome</th>
+        					<th>Descricao</th>
+        					<th>Editar</th>
+        					<th>Excluir</th>
+      					</tr>
+    				</thead>
+    				<tbody>
+    				</tbody>
+  				</table>
     <a class="btn btn-primary" href="view/cadastroTarefa.jsp">Criar nova tarefa</a>
                   
                   </div>
@@ -391,16 +385,63 @@ h6 span{
           </div>
 </section>
     <script>
+    $(document).ready(function(){
+    	var urlGet = "<%= request.getContextPath() %>/obterTarefasServelet"
+    		$.ajax({
+    			  type: "GET",
+    			  url: urlGet,
+    			  data: JSON.stringify(obj),
+    			  success: function(response) {
+    			    dataTable.clear();
+
+    			    response.forEach(function(data) {
+    			      dataTable.row.add(data);
+    			    });
+
+    			    dataTable.draw();
+    			    $("a[data-id]").click(function() {
+    			    	id = $(this).data('id'); 
+    			    	$("#myModal").modal('toggle')
+    			        obj = {
+    			    		"id":id
+    			    	};
+    			    });
+    			  },
+    			  error: function(error) {
+    			    console.log(error);
+    			  }
+    			});
+    	var dataTable = $('#myTable').DataTable({
+    		  language: {
+    		    emptyTable: "Sem dados encontrados",
+    		    zeroRecords: "Sem dados encontrados",
+    		    info: "Mostrando _START_ até _END_ de _TOTAL_ entradas",
+    		    infoEmpty: "Mostrando 0 até 0 de 0 entradas",
+    		  },
+    		  columns: [
+    		    { data: 'titulo' },
+    		    { data: 'descricao' },
+    		    {
+    		      data: 'id',
+    		      render: function(data, type, row) {
+    		        var editarLink = '<a style="white-space: nowrap;" class="btn btn-warning" href="edicaoTarefaServlet?id=' + data + '">Editar</a>';
+    		        return editarLink;
+    		      }
+    		    },
+    		    {
+    		      data: null,
+    		      render: function(data, type, row) {
+    		        var excluirLink = '<a data-id="' + data.id + '" class="btn btn-danger" style="background-color: #ed6a6a!important; white-space: nowrap;">Excluir</a>';
+    		        return excluirLink;
+    		      }
+    		    }
+    		  ]
+    		});
+	});
     var obj = null;
     var url = "<%= request.getContextPath() %>/deletarTarefa"
     var urlSair = "<%= request.getContextPath() %>/mainServlet"
-    $("a[data-id]").click(function() {
-    	id = $(this).data('id'); 
-    	$("#myModal").modal('toggle')
-        obj = {
-    		"id":id
-    	};
-    });
+    
     	$("#deletarTarefa").on('click',function(){
     		$.ajax({
     				type: "DELETE",

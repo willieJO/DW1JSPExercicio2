@@ -1,8 +1,7 @@
 package controller;
 
-import java.io.IOException;
+import java.io.IOException; 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import dao.UsuarioDAO;
@@ -17,6 +16,7 @@ import model.Tarefa;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import model.Usuario;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
