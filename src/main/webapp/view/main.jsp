@@ -366,10 +366,10 @@ h6 span{
                 <table id="myTable">
     				<thead>
       					<tr>
-        					<th>Nome</th>
-        					<th>Descricao</th>
-        					<th>Editar</th>
-        					<th>Excluir</th>
+        					<th class="text-center">Nome</th>
+        					<th class="text-center">Descricao</th>
+        					<th class="text-center">Editar</th>
+        					<th class="text-center">Excluir</th>
       					</tr>
     				</thead>
     				<tbody>
