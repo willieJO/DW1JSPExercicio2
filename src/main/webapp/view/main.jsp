@@ -430,10 +430,10 @@ h6 span{
       		      data: 'status',
       		      render: function(data, type, row) {
       		    	if(data == "Em Andamento") {
-      		    		var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess"  href="edicaoTarefaServlet?id=' + data + '">Concluir</a>';
+      		    		var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess"  href="concluirTarefa?id=' + row.id + '">Concluir</a>';
           		        return editarLink;	
       		    	}
-      		    	var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess disabled" href="edicaoTarefaServlet?id=' + data + '">Concluir</a>';
+      		    	var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess disabled" href="concluirTarefa?id=' + row.id + '">Concluir</a>';
       		        return editarLink;
       		      }
       		    },
