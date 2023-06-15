@@ -368,6 +368,9 @@ h6 span{
       					<tr>
         					<th class="text-center">Nome</th>
         					<th class="text-center">Descricao</th>
+        					<th class="text-center">Status</th>
+        					<th class="text-center">Data de Criação</th>
+        					<th class="text-center">Concluir</th>
         					<th class="text-center">Editar</th>
         					<th class="text-center">Excluir</th>
       					</tr>
@@ -421,6 +424,19 @@ h6 span{
     		  columns: [
     		    { data: 'titulo' },
     		    { data: 'descricao' },
+    		    {data: 'status'},
+    		    {data:'dataCriacao'},
+    		    {
+      		      data: 'status',
+      		      render: function(data, type, row) {
+      		    	if(data == "Em Andamento") {
+      		    		var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess"  href="edicaoTarefaServlet?id=' + data + '">Concluir</a>';
+          		        return editarLink;	
+      		    	}
+      		    	var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess disabled" href="edicaoTarefaServlet?id=' + data + '">Concluir</a>';
+      		        return editarLink;
+      		      }
+      		    },
     		    {
     		      data: 'id',
     		      render: function(data, type, row) {

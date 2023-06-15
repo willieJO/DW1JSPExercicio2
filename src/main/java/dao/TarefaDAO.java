@@ -70,15 +70,14 @@ public class TarefaDAO {
     }
 
     public void cadastrarTarefa(Tarefa tarefa) {
-        String sql = "INSERT INTO tarefas (titulo, descricao, data_criacao, data_conclusao, status, usuario_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tarefas (titulo, descricao, data_criacao, status, usuario_id) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection()) {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, tarefa.getTitulo());
             statement.setString(2, tarefa.getDescricao());
             statement.setDate(3, new Date(tarefa.getDataCriacao().getTime()));
-            statement.setDate(4, new Date(tarefa.getDataConclusao().getTime()));
-            statement.setString(5, tarefa.getStatus());
-            statement.setInt(6, tarefa.getUsuario().getId());
+            statement.setString(4, tarefa.getStatus());
+            statement.setInt(5, tarefa.getUsuario().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error inserting task into the database: " + e.getMessage());

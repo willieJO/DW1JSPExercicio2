@@ -35,7 +35,8 @@ public class CadastroTarefaServlet extends HttpServlet {
             Usuario user = new Usuario();
             user.setId(userId);
             tarefa.setDataCriacao(dataCriacao);
-            tarefa.setDataConclusao(dataCriacao);
+            tarefa.setDataConclusao(null);
+            tarefa.setStatus("Em Andamento");
             tarefa.setUsuario(new Usuario());
             tarefa.setUsuario(user);
             TarefaDAO tarefaDAO = new TarefaDAO();

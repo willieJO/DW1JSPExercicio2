@@ -7,7 +7,7 @@ public class ConnectionFactory {
 	private static final String HOST = "localhost";
 	private static final String DB_NAME = "exercicio2";
 	private static final String USER = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "";
 
     static {
 		try {

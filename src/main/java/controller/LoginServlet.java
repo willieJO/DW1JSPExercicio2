@@ -16,6 +16,8 @@ import model.Tarefa;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import model.Usuario;
+import utils.Criptografia;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebServlet("/loginServlet")
@@ -27,6 +29,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ObjectMapper  objectMapper = new ObjectMapper();
         Usuario usuario = objectMapper.readValue(request.getReader(), Usuario.class);
+        usuario.setSenha(Criptografia.encryptPassword(usuario.getSenha()));
         UsuarioDAO dao = new UsuarioDAO();
         HTTPRequestStatus http = new HTTPRequestStatus();
         http.setStatus(true);

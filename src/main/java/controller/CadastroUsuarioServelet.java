@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import model.HTTPRequestStatus;
 import model.Tarefa;
 import model.Usuario;
+import utils.Criptografia;
 import dao.UsuarioDAO;
 
 /**
@@ -49,6 +50,7 @@ public class CadastroUsuarioServelet extends HttpServlet {
         http.setRedirectUrl("");
         ObjectMapper  objectMapper = new ObjectMapper();
 		Usuario user = objectMapper.readValue(request.getReader(), Usuario.class);
+		user.setSenha(Criptografia.encryptPassword(user.getSenha()));
         UsuarioDAO dao = new UsuarioDAO();
         dao.cadastrarUsuario(user);
         http.setRedirectUrl("mainServlet");
