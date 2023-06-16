@@ -10,6 +10,23 @@
     <title>Cadastro de Tarefa</title>
 </head>
 <body>
+<div class="collapse" id="navbarToggleExternalContent">
+  <div class="bg-dark p-4">
+    <h5 class="text-white h4">Menu</h5>
+    <a href="<%= request.getContextPath() %>/cadastroTarefaServlet" class="text-muted">Cadastrar tarefa</a>
+    <br>
+    <a href="<%= request.getContextPath() %>/mainServlet"  class="text-muted">Listagem de tarefas</a>
+    <br>
+    <a id="sair" class="text-muted">Sair</a>
+  </div>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
     
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -58,6 +75,8 @@
 var url = "<%= request.getContextPath() %>/cadastroTarefaServlet"
 
 	$("#cadastrarTarefa").on('click',function(){
+		$('#tituloX').css('background-color','')
+		$('#descricaoX').css('background-color','')
 		var isOk = true;
 		if ($('#tituloX').val() == '') {
 			$('#tituloX').css('background-color','#f0a1a9')

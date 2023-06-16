@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.IOException;
+import java.io.IOException; 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -50,8 +50,18 @@ public class CadastroUsuarioServelet extends HttpServlet {
         http.setRedirectUrl("");
         ObjectMapper  objectMapper = new ObjectMapper();
 		Usuario user = objectMapper.readValue(request.getReader(), Usuario.class);
+		
 		user.setSenha(Criptografia.encryptPassword(user.getSenha()));
         UsuarioDAO dao = new UsuarioDAO();
+        if (dao.isUsuarioExiste(user.getLogin())) {
+        	http.setStatus(false);
+        	String json = new Gson().toJson(http);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+			return;
+		}
+        http.setStatus(true);
         dao.cadastrarUsuario(user);
         http.setRedirectUrl("mainServlet");
         String json = new Gson().toJson(http);

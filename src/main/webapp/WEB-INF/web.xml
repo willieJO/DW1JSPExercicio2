@@ -129,4 +129,14 @@
     <servlet-name>ObterTarefasServelet</servlet-name>
     <url-pattern>/ObterTarefasServelet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>concluirTarefaServelet</display-name>
+    <servlet-name>concluirTarefaServelet</servlet-name>
+    <servlet-class>controller.concluirTarefaServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>concluirTarefaServelet</servlet-name>
+    <url-pattern>/concluirTarefaServelet</url-pattern>
+  </servlet-mapping>
 </web-app>

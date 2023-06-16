@@ -47,6 +47,25 @@ public class UsuarioDAO {
 
         return usuario;
     }
+    public boolean isUsuarioExiste(String user) {
+    	// retorna true se existe se não existe false
+    	String sql = "Select Id from usuarios where login = ?";
+    	try (Connection conn = ConnectionFactory.getConnection()) {
+    		try (PreparedStatement statement = connection.prepareStatement(sql)) { 
+    			statement.setString(1, user);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return true;
+                    } else {
+                    	return false;
+                    }
+                }
+    		}
+    	} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
     
     public boolean usuarioValido(String login, String senha,HttpSession session) {
     	String sql = "SELECT Id FROM usuarios WHERE login = ? AND senha = ?";

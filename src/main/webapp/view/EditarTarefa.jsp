@@ -10,6 +10,24 @@
     <title>Editar Tarefa</title>
 </head>
 <body>
+
+<div class="collapse" id="navbarToggleExternalContent">
+  <div class="bg-dark p-4">
+    <h5 class="text-white h4">Menu</h5>
+    <a href="<%= request.getContextPath() %>/cadastroTarefaServlet" class="text-muted">Cadastrar tarefa</a>
+    <br>
+    <a href="<%= request.getContextPath() %>/mainServlet"  class="text-muted">Listagem de tarefas</a>
+    <br>
+    <a id="sair" class="text-muted">Sair</a>
+  </div>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
     
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -20,7 +38,7 @@
                 
                   <div class="mb-md-5 mt-md-4 pb-5">
                   
-                    <h2 class="fw-bold mb-2 text-uppercase">Cadastrar Tarefa</h2>
+                    <h2 class="fw-bold mb-2 text-uppercase">Editar Tarefa</h2>
                     
                     <div class="form-outline form-white mb-4">
                       <label class="form-label" for="tituloX">Nome da tarefa</label>
@@ -33,7 +51,7 @@
                         <textarea required class="form-control" id="descricaoX" name="descricao" rows="3"></textarea>
                     </div>
                   
-                    <button class="btn btn-outline-light btn-lg px-5" id="editarTarefa">Cadastrar Tarefar</button>
+                    <button class="btn btn-outline-light btn-lg px-5" id="editarTarefa">Editar Tarefar</button>
                   
                     <div class="d-flex justify-content-center text-center mt-4 pt-1">
                       <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
@@ -81,11 +99,7 @@ var url = "<%= request.getContextPath() %>/EdicaoTarefaServlet"
 	    			url: url,
 	    			data: JSON.stringify(obj),
 	    			success: function(response){
-	    				if (response.status) {
-	    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;	
-	    				} else {
-	    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;
-	    				}
+	    				 window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;	
 	    			 },
 	    	         error: function(error) {
 	    	            console.log(error)

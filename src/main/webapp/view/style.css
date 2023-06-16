@@ -15,6 +15,7 @@ a {
 }
 a:hover {
 	text-decoration: none;
+	background-color: #ffeba7
 }
 .link {
   color: #c4c3ca;

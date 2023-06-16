@@ -34,6 +34,19 @@ public class TarefaDAO {
 			e.printStackTrace();
 		}
     }
+    
+    public void concluirTarefa(int id) {
+    	String sql = "UPDATE tarefas SET status = 'Concluida' where id = ?";
+    	try (Connection conn = ConnectionFactory.getConnection()) {
+    		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+    			statement.setInt(1, id);
+    			statement.executeUpdate();
+    		}
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public List<Tarefa> obterTarefasPorUsuario(int usuarioId) {
         List<Tarefa> tarefas = new ArrayList<>();

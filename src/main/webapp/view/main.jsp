@@ -32,6 +32,7 @@ a {
 }
 a:hover {
 	text-decoration: none;
+	background-color: #ffeba7
 }
 .link {
   color: #c4c3ca;
@@ -320,6 +321,10 @@ h6 span{
 <div class="collapse" id="navbarToggleExternalContent">
   <div class="bg-dark p-4">
     <h5 class="text-white h4">Menu</h5>
+    <a href="<%= request.getContextPath() %>/cadastroTarefaServlet" class="text-muted">Cadastrar tarefa</a>
+    <br>
+    <a href="<%= request.getContextPath() %>/mainServlet"  class="text-muted">Listagem de tarefas</a>
+    <br>
     <a id="sair" class="text-muted">Sair</a>
   </div>
 </div>
@@ -390,6 +395,7 @@ h6 span{
     <script>
     $(document).ready(function(){
     	var urlGet = "<%= request.getContextPath() %>/obterTarefasServelet"
+    	var urlConclui = "<%= request.getContextPath() %>/concluirTarefa"
     		$.ajax({
     			  type: "GET",
     			  url: urlGet,
@@ -409,6 +415,24 @@ h6 span{
     			    		"id":id
     			    	};
     			    });
+    			    
+    			    $("a[data-concluir]").click(function(){
+    			    	obj = {
+    			    			"id": $(this).data("concluir")
+    			    	}
+    			    	$.ajax({
+    	    				type: "PUT",
+    	    				url: urlConclui,
+    	    				data: JSON.stringify(obj),
+    	    			    success: function(response){
+    	    			        window.location.reload();
+    	    			    },
+    	    	            error: function(error) {
+    	    	            	console.log(error)
+    	    	            }
+    	    		  });
+    			    });
+    			    
     			  },
     			  error: function(error) {
     			    console.log(error);
@@ -430,7 +454,7 @@ h6 span{
       		      data: 'status',
       		      render: function(data, type, row) {
       		    	if(data == "Em Andamento") {
-      		    		var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess"  href="concluirTarefa?id=' + row.id + '">Concluir</a>';
+      		    		var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess" data-concluir=' + row.id +'>Concluir</a>';
           		        return editarLink;	
       		    	}
       		    	var editarLink = '<a style="white-space: nowrap; background-color: #20c997!important;" class="btn btn-sucess disabled" href="concluirTarefa?id=' + row.id + '">Concluir</a>';
@@ -456,8 +480,8 @@ h6 span{
 	});
     var obj = null;
     var url = "<%= request.getContextPath() %>/deletarTarefa"
-    var urlSair = "<%= request.getContextPath() %>/mainServlet"
-    
+    var urlMain = "<%= request.getContextPath() %>/mainServlet"
+    var urlCadastro = "<%= request.getContextPath() %>/cadastroTarefaServlet"
     	$("#deletarTarefa").on('click',function(){
     		$.ajax({
     				type: "DELETE",
@@ -477,15 +501,15 @@ h6 span{
     	$("#sair").on("click", function(){
     		$.ajax({
 				type: "PUT",
-				url: urlSair,
-			    success: function(response){
-			        window.location.href= urlSair
+				url: urlMain,
+			    success: function(response) {
+			        window.location.href= urlMain
 			    },
 	            error: function(error) {
-	            	window.location.href= urlSair
+	            	window.location.href= urlMain
 	            }
 		  });
-    	})
-    </script>
+    	});
+</script>
 </body>
 </html>
