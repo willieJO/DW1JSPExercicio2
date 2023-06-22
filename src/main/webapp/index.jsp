@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
@@ -40,6 +40,9 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Cadastrar</h4>
+											<div id="existe" class="form-group d-none">
+												<span style="color:red">Usuario ja cadastrado</span>
+											</div>
 											<div class="form-group">
 												<input type="text" name="logname" class="form-style" placeholder="Seu nome" id="cName" autocomplete="off">
 												<i class="input-icon uil uil-user"></i>
@@ -93,6 +96,27 @@
 		})
 		$("#cadastrar").on("click",function(){
 			var url = "<%= request.getContextPath() %>/cadastroUsuario";
+			$("#cName").css("background-color","")
+			$("#cUser").css("background-color","")
+			$("#cEmail").css("background-color","")
+			$("#cPass").css("background-color","")
+			if ($("#cName").val() == "") {
+				$("#cName").css("background-color","red");
+				return;
+			}
+			if ($("#cUser").val() == "") {
+				$("#cUser").css("background-color","red");
+				return;
+			}
+			if ($("#cEmail").val() == "") {
+				$("#cEmail").css("background-color","red");
+				return;
+			}
+			if ($("#cPass").val() == "") {
+				$("#cPass").css("background-color","red");
+				return;
+			}
+			
 			var obj = {
 					"login": $("#cUser").val(),
 					"senha": $("#cPass").val(),
@@ -105,9 +129,11 @@
     			data: JSON.stringify(obj),
     			success: function(response){
     				if (response.status) {
+    					$("#existe").addClass("d-none")
+
     					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;	
     				} else {
-    					window.location.href = "<%= request.getContextPath() %>/" + response.redirectUrl;
+    					$("#existe").removeClass("d-none")
     				}
     			 },
     	         error: function(error) {
